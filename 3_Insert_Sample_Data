@@ -1,0 +1,434 @@
+-- Use the flavour_finds database
+USE flavour_finds;
+
+-- Create Categories
+
+INSERT INTO lkp_categories (name) VALUES
+('lunch'), -- 1
+('dinner'), -- 2
+('breakfast'), -- 3
+('dessert'), -- 4users
+('vegan'), -- 5
+('vegetarian'); -- 6
+
+-- Create methods for ingredients
+
+INSERT INTO lkp_method (description) VALUES
+('for frying'), -- 1
+('plus extra for drizzling'), -- 2
+('to serve'), -- 3
+('to serve (optional)'), -- 4
+('finely chopped'), -- 5
+('seeds removed and thinly sliced'), -- 6
+('cut into 1cm/½in slices'), -- 7
+('cut into thin wedges'), -- 8
+('plus extra for serving'), -- 9
+('whipping'), -- 10
+('plus extra for dusting'), -- 11
+('very thinly sliced into half moons'), -- 12
+('very thinly sliced lengthways'), -- 13
+('very finely shredded'), -- 14
+('sliced cut into half moons'), -- 15
+('thinly sliced (optional)'), -- 16
+('at room temperature'), -- 17
+('prepared according to the packet instructions'), -- 18
+('flesh and rind finely chopped'), -- 19
+('toasted'), -- 20
+('roughly chopped'), -- 21
+('crushed'), -- 22
+('or to taste'); -- 23
+
+-- Create Unit of Measure to be used with ingredients
+
+INSERT INTO lkp_unit_of_measure (name) VALUES
+('tbsp'), -- 1
+('tsp'), -- 2
+('oz'), -- 3
+('g'), -- 4
+('kg'), -- 5
+('cup'), -- 6
+('pinch'), -- 7
+('freshly ground'), -- 8
+('fresh'), -- 9
+('squeeze'), -- 10
+('level tsp'), -- 11
+('heaped tsp'), -- 12
+('level tbsp'), -- 13
+('heaped tbsp'), -- 14
+(''), -- 15
+('extra small'), -- 16
+('small'), -- 17
+('medium'), -- 18
+('large'), -- 19
+('extra large'), -- 20
+('large pinch'), -- 21
+('ml'); -- 22
+
+-- Create Ingredient items
+
+INSERT INTO lkp_ingredients (name) VALUES
+('self-raising brown flour'), -- 1
+('self-raising wholemeal flour'), -- 2
+('fine sea salt'), -- 3
+('full-fat plain yoghurt'), -- 4
+('yellow pepper'), -- 5
+('orange pepper'), -- 6
+('courgette'),-- 7
+('red onion'), -- 8
+('extra virgin olive oil'), -- 9
+('dried chilli flakes'), -- 10
+('ready-grated mozzarella'), -- 11
+('ready-grated cheddar cheese'), -- 12
+('goats’ cheese'), -- 13
+('mozzarella ball'), -- 14
+('black pepper'), -- 15
+('basil leaves'), -- 16
+('passata sauce'), -- 17
+('dried oregano'), -- 18
+('caster sugar'), -- 19
+('soya milk'), -- 20
+('almond milk'), -- 21
+('vanilla extract'), -- 22
+('self-raising flour'), -- 23
+('baking powder'), -- 24
+('sea salt'), -- 25
+('sunflower oil'), -- 26
+('chopped tomatoes'), -- 27
+('rose harissa'), -- 28
+('lemon juice'), -- 29
+('onion'), -- 30
+('white wine vinegar'), -- 31
+('flatleaf parsley'), -- 32
+('plain yoghurt'), -- 33
+('dried mint'), -- 34
+('oyster mushrooms'), -- 35
+('garlic oil'), -- 36
+('sweet paprika'), -- 37
+('ground coriander'), -- 38
+('celery salt'), -- 39
+('garlic granules'), -- 40
+('white pitta bread'), -- 41
+('white cabbage'), -- 42
+('tomatoes'), -- 43
+('pickled chillies'), -- 44
+('salt'), -- 45
+('digestive biscuits'), -- 46
+('ground cardamom'), -- 47
+('unsalted butter'), -- 48
+('powdered gelatine'), -- 49
+('double cream'), -- 50
+('cream cheese'), -- 51
+('Alfonso mango pulp'), -- 52
+('couscous'), -- 53
+('preserved lemons'), -- 54
+('dried cranberries'), -- 55
+('pine nuts'), -- 56
+('unsalted shelled pistachio nuts'), -- 57
+('garlic cloves'), -- 58
+('red wine vinegar'), -- 59
+('rocket leaves'); -- 60
+
+-- ********************* Healthy Pizza *********************
+INSERT INTO recipes (title, description, preparation_time, cooking_time, nr_served, picture_url) VALUES
+('Healthy Pizza', 'No yeast required for this easy, healthy pizza, topped with colourful vegetables that\'s ready in 30 minutes. This is a great recipe if you want to feed the kids in a hurry!', 'less than 30 mins', '10 to 30 mins', 'Serves 2', '/images/recipes/healthy_pizza_55143_16x9.jpg');
+
+SET @recipe_id = (SELECT MAX(recipe_id) FROM recipes);
+
+INSERT INTO recipe_category (recipe_id, category_id) VALUES
+(@recipe_id, 1), -- lunch
+(@recipe_id, 2), -- dinner
+(@recipe_id, 6); -- For vegetarian 
+
+-- Insert for base ingredients
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 1, 125, 4, 11, 'For the Base'), -- self-raising brown flour
+(@recipe_id, 3, 1, 7, NULL, 'For the Base'), -- fine sea salt
+(@recipe_id, 4, 125, 4, NULL, 'For the Base'); -- full-fat plain yoghurt
+
+-- Insert for topping ingredients
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 5, 1, NULL, 6, 'For the topping'), -- yellow pepper
+(@recipe_id, 7, 1, NULL, 7, 'For the topping'), -- courgette
+(@recipe_id, 8, 1, NULL, 8, 'For the topping'), -- red onion
+(@recipe_id, 9, 1, 1, 2, 'For the topping'), -- extra virgin olive oil
+(@recipe_id, 10, '½', 2, NULL, 'For the topping'), -- dried chilli flakes
+(@recipe_id, 11, 50, 4, NULL, 'For the topping'), -- ready-grated mozzarella
+(@recipe_id, 15, '', 8, NULL, 'For the topping'), -- freshly ground black pepper
+(@recipe_id, 16, '', 9, NULL, 'For the topping'); -- fresh basil leaves, to serve (optional)
+-- Insert for tomato sauce ingredients
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 17, 6, 1, NULL, 'For the tomato sauce'), -- passata sauce
+(@recipe_id, 18, 1, 2, NULL, 'For the tomato sauce'); -- dried oregano
+
+-- Insert steps for the "Healthy Pizza" recipe
+INSERT INTO recipe_steps (recipe_id, step_nr, description, minutes_needed) VALUES
+(@recipe_id, 1, 'Preheat the oven to 220C/200C Fan/Gas 7.', NULL),
+(@recipe_id, 2, 'To prepare the topping, put the pepper, courgette, red onion and oil in a bowl, season with lots of black pepper and mix together. Scatter the vegetables over a large baking tray and roast for 15 minutes.', 15),
+(@recipe_id, 3, 'Meanwhile, make the pizza base. Mix the flour and salt in a large bowl. Add the yoghurt and 1 tablespoon of cold water and mix with a spoon, then use your hands to form a soft, spongy dough. Turn out onto a lightly floured surface and knead for about 1 minute.', NULL),
+(@recipe_id, 4, 'Using a floured rolling pin, roll the dough into a roughly oval shape, approx. 3mm/⅛in thick, turning regularly. (Ideally, the pizza should be around 30cm/12in long and 20cm/8in wide, but it doesn’t matter if the shape is uneven, it just needs to fit onto the same baking tray that the vegetables were cooked on.)', NULL),
+(@recipe_id, 5, 'Transfer the roasted vegetables to a bowl. Slide the pizza dough onto the baking tray and bake for 5 minutes. Take the tray out of the oven and turn the dough over.', 5),
+(@recipe_id, 6, 'For the tomato sauce, mix the passata with the oregano and spread over the dough. Top with the roasted vegetables, sprinkle with the chilli flakes and then the cheese. Bake the pizza for a further 8–10 minutes, or until the dough is cooked through and the cheese beginning to brown.', 10),
+(@recipe_id, 7, 'Season with black pepper, drizzle with a slurp of olive oil and, if you like, scatter fresh basil leaves on top just before serving.', NULL);
+
+-- Insert tips for the "Healthy Pizza" recipe
+INSERT INTO recipe_tips (recipe_id, tip_nr, description) VALUES
+(@recipe_id, 1, 'When you don\'t have yellow peppers available, orange peppers can be a great alternative, offering a similar sweet flavor and vibrant color to your dishes.'),
+(@recipe_id, 2, 'Feel free to use any cheese you like for this pizza – mozzarella, cheddar, or goats’ cheese are all excellent choices. It\'s also a great way to use up a mix of odds and ends from the fridge.'),
+(@recipe_id, 3, 'Make two pizzas instead of one large pizza if you like.'),
+(@recipe_id, 4, 'If you don’t have self-raising wholemeal flour, use plain wholemeal flour and add 1 teaspoon of baking powder and an extra tablespoon of water if needed.'),
+(@recipe_id, 5, 'Extra virgin olive oil adds a fantastic flavor, but if you need an alternative, any high-quality vegetable oil or a light olive oil will work well for both cooking and drizzling.'),
+(@recipe_id, 6, 'Any leftover passata can be used for pasta sauces, stews, or curries. It freezes well for up to 4 months. Instead of passata, you can also use strained tinned tomatoes or a store-bought pizza topping if you\'re in a pinch.');
+
+-- ********************* Vegan Pancakes *********************
+INSERT INTO recipes (title, description, preparation_time, cooking_time, nr_served, picture_url) VALUES
+('Vegan Pancakes', 'Try this vegan fluffy American pancake recipe for a perfect start to the day. Serve these pancakes with fresh berries, maple syrup or chocolate sauce for a really luxurious start to the day.', 'less than 30 mins', '10 to 30 mins', 'Serves 2', '/images/recipes/vegan_american_pancakes_76094_16x9.jpg');
+
+SET @recipe_id = LAST_INSERT_ID();
+
+INSERT INTO recipe_category (recipe_id, category_id) VALUES
+(@recipe_id, 3), -- For Breakfast
+(@recipe_id, 5), -- For vegan
+(@recipe_id, 6); -- For vegetarian 
+
+-- Adjust ingredient_id based on actual entries
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 23, 125, 4, NULL, ''), -- self-raising flour, 125g
+(@recipe_id, 19, 2, 1, NULL, ''), -- caster sugar, 2 tbsp
+(@recipe_id, 24, 1, 2, NULL, ''), -- baking powder, 1 tsp
+(@recipe_id, 25, 1, 7, NULL, ''), -- fine sea salt, good pinch
+(@recipe_id, 20, 150, 5, NULL, ''), -- soya milk (first option when "or" is present), 150ml
+(@recipe_id, 22, 0.25, 2, NULL, ''), -- vanilla extract, ¼ tsp
+(@recipe_id, 26, 4, 1, 1, ''); -- sunflower oil, for frying, 4 tsp
+
+-- Insert method steps
+INSERT INTO recipe_steps (recipe_id, step_nr, description, minutes_needed) VALUES
+(@recipe_id, 1, 'Put the flour, sugar, baking powder and salt in a bowl and mix thoroughly. Add the milk and vanilla extract and mix with a whisk until smooth.', NULL),
+(@recipe_id, 2, 'Place a large non-stick frying pan over a medium heat. Add 2 teaspoons of the oil and wipe around the pan with a heatproof brush or carefully using a thick wad of kitchen paper.', NULL),
+(@recipe_id, 3, 'Once the pan is hot, pour a small ladleful of the batter into one side of the pan and spread with the back of the spoon until around 10cm/4in in diameter. Make a second pancake in exactly the same way, greasing the pan with the remaining oil before adding the batter.', NULL),
+(@recipe_id, 4, 'Cook for about a minute, or until bubbles are popping on the surface and just the edges look dry and slightly shiny. Quickly and carefully flip over and cook on the other side for a further minute, or until light, fluffy and pale golden brown.', 2),
+(@recipe_id, 5, 'Transfer to a plate and keep warm in a single layer on a baking tray in a low oven while the rest of the pancakes are cooked in exactly the same way. Serve with your preferred toppings.', NULL);
+-- Insert recipe tips
+INSERT INTO recipe_tips (recipe_id, tip_nr, description) VALUES
+(@recipe_id, 1, 'While the recipe uses soya milk for its base, feel free to substitute it with almond milk depending on your preference or availability.'),
+(@recipe_id, 1, 'Whipped coconut cream is good with these too, but it must be well chilled before whipping.'),
+(@recipe_id, 2, 'You can keep the pancakes warm in a low oven while you make the full batch.');
+
+
+-- **************************** Mushroom Doner *****************************
+-- Insert for the Mushroom doner recipe (parent)
+INSERT INTO recipes (title, description, preparation_time, cooking_time, nr_served, picture_url) VALUES
+('Mushroom Doner', 'A meat-free mushroom ‘doner’ kebab packed with two types of sauces, pickles and veg. A mighty delicious vegetarian dish.', 'less than 30 mins', '10 to 30 mins', 'Serves 4', '/images/recipes/mushroom_doner_22676_16x9.jpg');
+
+SET @recipe_id = LAST_INSERT_ID();
+
+INSERT INTO recipe_category (recipe_id, category_id) VALUES
+(@recipe_id, 1), -- lunch
+(@recipe_id, 2); -- dinner
+
+-- Insert Ingredients for the Mushroom Doner
+
+-- For the chilli sauce
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 27, '1 x 400', 4, NULL, 'For the chilli sauce'), -- chopped tomatoes
+(@recipe_id, 28, 2, 1, NULL, 'For the chilli sauce'), -- rose harissa
+(@recipe_id, 19, 2, 2, NULL, 'For the chilli sauce'), -- caster sugar
+(@recipe_id, 29, 'good', 10, NULL, 'For the chilli sauce'); -- lemon juice
+
+-- For the onion
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 30, 1, NULL, 12, 'For the onion'), -- onion
+(@recipe_id, 31, 2, 11, NULL, 'For the onion'), -- white wine vinegar
+(@recipe_id, 32, 20, 3, 5, 'For the onion'); -- flatleaf parsley
+
+-- For the yoghurt sauce
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 33, 150, 4, NULL, 'For the yoghurt sauce'), -- plain yoghurt
+(@recipe_id, 34, 1, 12, NULL, 'For the yoghurt sauce'), -- dried mint
+(@recipe_id, 45, '', 15, NULL, 'For the yoghurt sauce'), -- salt
+(@recipe_id, 15, '', 8, NULL, 'For the yoghurt sauce');  -- freshly ground black pepper
+
+-- For the ‘doner’
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 35, 500, 4, 13, 'For the ‘doner’'), -- oyster mushrooms
+(@recipe_id, 36, 2, 2, NULL, 'For the ‘doner’'), -- garlic oil
+(@recipe_id, 37, 2, 2, NULL, 'For the ‘doner’'), -- sweet paprika
+(@recipe_id, 38, 2, 12, NULL, 'For the ‘doner’'), -- ground coriander
+(@recipe_id, 39, 2, 2, NULL, 'For the ‘doner’'), -- celery salt
+(@recipe_id, 40, 3, 2, NULL, 'For the ‘doner’'), -- garlic granules
+(@recipe_id, 15, '½', 8, NULL, 'For the ‘doner’'), -- black pepper
+(@recipe_id, 41, 4, 15, NULL, 'For the ‘doner’'); -- white pitta bread
+
+-- For garnish
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 42, '¼', 17, 14, 'For the garnish'), -- white cabbage
+(@recipe_id, 43, 2, NULL, 15, 'For the garnish'), -- tomatoes
+(@recipe_id, 44, '4-6', NULL, 16, 'For the garnish'); -- pickled chillies
+
+-- Insert for Recipe Steps (Methods)
+INSERT INTO recipe_steps (recipe_id, step_nr, description, minutes_needed) VALUES
+(@recipe_id, 1, 'Preheat the oven to 180C/200C Fan/Gas 4.', NULL),
+(@recipe_id, 2, 'To make the chilli sauce, heat the chopped tomatoes, rose harissa, sugar, and lemon juice in a small saucepan over a medium heat. Bring to a gentle boil and cook for 10 minutes, stirring regularly, until reduced to a thick sauce-like consistency. Remove from the heat and set aside to cool. You can blend the sauce until it’s smooth using a hand-blender if you like, or just leave it chunky.', 10),
+(@recipe_id, 3, 'For the onion, mix together the onion slices, vinegar, and parsley and set aside.', NULL),
+(@recipe_id, 4, 'To make the yoghurt sauce, mix the yoghurt with the dried mint, season with salt and pepper and set aside.', NULL),
+(@recipe_id, 5, 'Put the pittas in the oven to warm for 5 minutes.', 5),
+(@recipe_id, 6, 'To make the ''doner'', heat a frying pan over a medium-high heat. Add the mushrooms and dry-fry for 2 minutes, stirring once or twice. Add the garlic oil, paprika, coriander, celery salt, garlic granules, and black pepper and quickly coat the mushrooms. Add 2–3 tablespoons of water to the pan and stir-fry for 1 minute before removing from the heat.', 3),
+(@recipe_id, 7, 'Split the warmed pitta breads. Spoon a little white cabbage into each pitta and add a little tomato and onion. Divide the mushrooms between the pittas, add a little more cabbage and tomato, then drizzle with the chilli and yoghurt sauces. Serve immediately, topped with the pickled chillies, if using.', NULL);
+
+-- No Tips on this recipe, front end should show nothing
+
+-- *************************** Mango Pie *****************************************
+INSERT INTO recipes (title, description, preparation_time, cooking_time, nr_served, picture_url) VALUES
+('Mango Pie', 'This mouthwatering mango dessert is an Indian take on a traditional Thanksgiving pie. For this recipe, you will need two 23cm/9in metal pie tins.', '30 mins to 1 hour', '30 mins to 1 hour', 'Serves 16', '/images/recipes/mango_pie_18053_16x9.jpg');
+
+SET @recipe_id = LAST_INSERT_ID();
+
+-- Insert as Dessert category
+INSERT INTO recipe_category (recipe_id, category_id) VALUES
+(@recipe_id, 4);
+
+-- For the biscuit base
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 46, 280, 4, NULL, 'For the biscuit base'), -- digestive biscuits
+(@recipe_id, 19, 65, 4, NULL, 'For the biscuit base'), -- granulated sugar
+(@recipe_id, 47, '¼', 2, NULL, 'For the biscuit base'), -- ground cardamom
+(@recipe_id, 48, 128, 4, NULL, 'For the biscuit base'), -- unsalted butter, melted
+(@recipe_id, 25, '', 21, NULL, 'For the biscuit base'); -- sea salt
+
+-- For the mango custard filling
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 19, 100, 4, NULL, 'For the mango custard filling'), -- granulated sugar
+(@recipe_id, 49, '2 tbsp plus ¼ tsp', 15, NULL, 'For the mango custard filling'), -- powdered gelatine
+(@recipe_id, 50, 120, 22, NULL, 'For the mango custard filling'), -- double cream
+(@recipe_id, 51, 115, 4, NULL, 'For the mango custard filling'), -- cream cheese, at room temperature
+(@recipe_id, 52, 850, 4, 17, 'For the mango custard filling'), -- Alfonso mango pulp
+(@recipe_id, 25, '', 21, NULL, 'For the mango custard filling'); -- sea salt
+
+-- Insert steps (methods)
+INSERT INTO recipe_steps (recipe_id, step_nr, description, minutes_needed) VALUES
+(@recipe_id, 1, 'To make the biscuit base, finely crush the biscuits by putting into a sealed plastic bag and bashing with a rolling pin. Alternatively, pulse to crumbs using a food processor. Transfer to a mixing bowl and add the sugar, cardamom, and salt, stirring well to combine.', NULL),
+(@recipe_id, 2, 'Pour the melted butter over the biscuit crumbs and mix, until thoroughly combined. Put half the crumb mixture in a 23cm/9in metal pie tin, and press evenly with your fingers. Build up the sides of the tin, compressing the base as much as possible to prevent it crumbling. Repeat with the rest of the mixture in the second tin.', NULL),
+(@recipe_id, 3, 'Preheat the oven to 160C/325F/Gas 3. Put the pie bases in the freezer for 15 minutes. Remove and bake for 12 minutes, or until golden brown. Transfer to a wire rack to cool.', 27),
+(@recipe_id, 4, 'To make the filling, pour cold water into a large bowl. In a separate bowl, mix the gelatine with half the sugar and sprinkle over the water. Leave to stand for a couple of minutes.', NULL),
+(@recipe_id, 5, 'Whip the cream with the remaining sugar to form medium stiff peaks. Set aside.', NULL),
+(@recipe_id, 6, 'Heat about a quarter of the mango pulp in a saucepan over a medium-low heat, until just warm. Do not boil it. Pour into the gelatine mixture and whisk until well combined. The gelatine should dissolve completely. Gradually whisk in the remaining mango pulp.', NULL),
+(@recipe_id, 7, 'Beat the cream cheese until soft and smooth. Add to the mango mixture with the salt. Blend the mixture using a hand blender, until completely smooth. Gently tap the bowl on the kitchen counter once or twice to pop any air bubbles.', NULL),
+(@recipe_id, 8, 'Fold about a quarter of the mango mixture into the whipped cream using a spatula. Repeat with the rest of the cream, until no streaks remain.', NULL),
+(@recipe_id, 9, 'Divide the filling between the cooled bases, using a rubber spatula to smooth out the filling. Refrigerate overnight, or for at least 5 hours, until firm and chilled.', 300);
+
+-- Insert tips 
+INSERT INTO recipe_tips (recipe_id, tip_nr, description) VALUES
+(@recipe_id, 1, 'This recipe makes two pies, so halve the ingredients if you\'re not feeding a crowd.');
+
+-- *********************** Couscous salad ***********************************
+-- Insert Recipe Details
+INSERT INTO recipes (title, description, preparation_time, cooking_time, nr_served, picture_url) VALUES
+('Couscous Salad', 'A nutritious and satisfying vegan couscous salad packed with colour, flavour and texture, from dried cranberries, pistachios and pine nuts.', 'less than 30 mins', 'less than 10 mins', 'Serves 6', '/images/recipes/couscous_salad_18053_16x9.jpg');
+
+SET @recipe_id = LAST_INSERT_ID();
+
+INSERT INTO recipe_category (recipe_id, category_id) VALUES
+(@recipe_id, 5), -- Vegan
+(@recipe_id, 6), -- Vegetarian
+(@recipe_id, 1), -- lunch
+(@recipe_id, 2); -- dinner
+
+-- Insert Ingredients
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id, quantity, uom_id, method_id, section) VALUES
+(@recipe_id, 53, 225, 4, 18, ''), -- couscous
+(@recipe_id, 54, 8, 16, 19, ''), -- preserved lemons
+(@recipe_id, 55, 180, 4, NULL, ''), -- dried cranberries
+(@recipe_id, 56, 120, 4, 20, ''), -- pine nuts
+(@recipe_id, 57, 160, 4, 21, ''), -- unsalted shelled pistachio nuts
+(@recipe_id, 9, 125, 22, NULL, ''), -- olive oil
+(@recipe_id, 32, 60, 4, 5, ''), -- flatleaf parsley
+(@recipe_id, 58, 4, 15, 22, ''), -- garlic cloves
+(@recipe_id, 59, 4, 1, NULL, ''), -- red wine vinegar
+(@recipe_id, 8, 1, 15, 5, ''), -- red onion
+(@recipe_id, 45, 1, 2, 23, ''), -- salt
+(@recipe_id, 60, 80, 4, NULL, ''); -- rocket leaves
+
+-- Insert Steps
+INSERT INTO recipe_steps (recipe_id, step_nr, description, minutes_needed) VALUES
+(@recipe_id, 1, 'In a large bowl mix all the ingredients together except the rocket, then taste and adjust the seasoning, adding more salt if necessary. Toss in the rocket and serve immediately.', NULL);
+
+-- Insert Tips
+INSERT INTO recipe_tips (recipe_id, tip_nr, description) VALUES
+(@recipe_id, 1, 'Couscous salads are great to make ahead for easy entertaining or weekday lunches. It will keep well for a few days in the fridge.');
+
+-- *********************
+
+-- Create Sample Users
+CALL `sp_register_user`('John Doe', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'john.doe@example.com');
+CALL `sp_register_user`('Jane Smith', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'jane.smith@example.com');
+CALL `sp_register_user`('Emily Johnson', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'emily.johnson@example.com');
+CALL `sp_register_user`('Michael Brown', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'michael.brown@example.com');
+CALL `sp_register_user`('Jessica Williams', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'jessica.williams@example.com');
+CALL `sp_register_user`('Daniel Miller', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'daniel.miller@example.com');
+CALL `sp_register_user`('Karen Wilson', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'karen.wilson@example.com');
+CALL `sp_register_user`('Brian Moore', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'brian.moore@example.com');
+CALL `sp_register_user`('Sophia Taylor', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'sophia.taylor@example.com');
+CALL `sp_register_user`('Edward Anderson', '$2y$10$PopIXQtOm1/kSeFBkRe8fe8T0bd2VHg.78U66NCnr62n65SIAAGmK', 'edward.anderson@example.com');
+
+-- Associate random ratings based on the sample users
+CALL `sp_add_rating`(1, 1, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(1, 2, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(1, 4, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(1, 5, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(2, 1, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(2, 2, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(2, 3, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(3, 1, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(3, 3, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(3, 4, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(4, 2, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(4, 3, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(4, 5, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(5, 1, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(5, 4, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(6, 2, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(6, 3, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(7, 1, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(7, 5, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(8, 2, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(8, 4, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(9, 3, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(9, 5, ROUND(1 + RAND() * 4));
+
+CALL `sp_add_rating`(10, 1, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(10, 2, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(10, 3, ROUND(1 + RAND() * 4));
+CALL `sp_add_rating`(10, 4, ROUND(1 + RAND() * 4));
+
+-- Add favourites for the users
+CALL `sp_add_to_favourites`(1, 3);
+CALL `sp_add_to_favourites`(1, 2);
+CALL `sp_add_to_favourites`(2, 5);
+CALL `sp_add_to_favourites`(2, 2);
+CALL `sp_add_to_favourites`(3, 3);
+CALL `sp_add_to_favourites`(3, 5);
+CALL `sp_add_to_favourites`(4, 4);
+CALL `sp_add_to_favourites`(4, 3);
+CALL `sp_add_to_favourites`(4, 5);
+CALL `sp_add_to_favourites`(5, 4);
+CALL `sp_add_to_favourites`(6, 3);
+CALL `sp_add_to_favourites`(6, 2);
+CALL `sp_add_to_favourites`(7, 3);
+CALL `sp_add_to_favourites`(7, 2);
+CALL `sp_add_to_favourites`(7, 5);
+CALL `sp_add_to_favourites`(7, 1);
+CALL `sp_add_to_favourites`(8, 2);
+CALL `sp_add_to_favourites`(8, 3);
+CALL `sp_add_to_favourites`(8, 1);
+CALL `sp_add_to_favourites`(8, 5);
+CALL `sp_add_to_favourites`(8, 4);
+CALL `sp_add_to_favourites`(9, 4);
+CALL `sp_add_to_favourites`(10, 5);
+CALL `sp_add_to_favourites`(10, 2);
