@@ -1,0 +1,113 @@
+-- Drop the flavour_finds database if it exists
+DROP DATABASE IF EXISTS flavour_finds;
+
+-- Create the flavour_finds database
+CREATE DATABASE flavour_finds;
+
+-- Use the flavour_finds database
+USE flavour_finds;
+
+-- Create users table
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
+-- Create recipes table
+CREATE TABLE recipes (
+    recipe_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    preparation_time varchar(50),
+    cooking_time varchar (50),
+    nr_served varchar(50),
+    picture_url TEXT
+);
+
+-- Create favourites table
+CREATE TABLE favourites (
+    favourite_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    recipe_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+);
+
+-- Create user_rating table
+CREATE TABLE user_rating (
+    user_rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    recipe_id INT,
+    rating INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+);
+
+-- Create lkp_categories table
+CREATE TABLE lkp_categories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Create recipe_category table
+CREATE TABLE recipe_category (
+    recipe_category_id INT PRIMARY KEY AUTO_INCREMENT,
+    recipe_id INT,
+    category_id INT,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
+    FOREIGN KEY (category_id) REFERENCES lkp_categories(category_id)
+);
+
+-- Create lkp_ingredients table
+CREATE TABLE lkp_ingredients (
+    ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Create lkp_unit_of_measure table
+CREATE TABLE lkp_unit_of_measure (
+    uom_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Create lkp_method table
+CREATE TABLE lkp_method (
+    method_id INT PRIMARY KEY AUTO_INCREMENT,
+    description VARCHAR(50) NOT NULL
+);
+
+-- Create recipe_ingredient table
+CREATE TABLE recipe_ingredient (
+    recipe_ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+    recipe_id INT,
+    section varchar(50),
+    ingredient_id INT,
+    quantity varchar(50),
+    uom_id INT,
+    method_id INT, 
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
+    FOREIGN KEY (ingredient_id) REFERENCES lkp_ingredients(ingredient_id),
+    FOREIGN KEY (uom_id) REFERENCES lkp_unit_of_measure(uom_id),
+    FOREIGN KEY (method_id) REFERENCES lkp_method(method_id)
+);
+
+-- Create recipe_steps table
+CREATE TABLE recipe_steps (
+    recipe_step_id INT PRIMARY KEY AUTO_INCREMENT,
+    recipe_id INT,
+    step_nr INT,
+    description TEXT,
+    minutes_needed INT, 
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+);
+
+-- Create recipe_tips table
+CREATE TABLE recipe_tips (
+    recipe_tip_id INT PRIMARY KEY AUTO_INCREMENT,
+    recipe_id INT,
+    tip_nr INT,
+    description TEXT,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+);
