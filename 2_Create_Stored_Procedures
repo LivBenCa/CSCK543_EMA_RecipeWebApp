@@ -1,0 +1,412 @@
+-- Use the flavour_finds database
+USE flavour_finds;
+
+-- Drop existing stored procedures if they exist
+DROP PROCEDURE IF EXISTS sp_login;
+DROP PROCEDURE IF EXISTS sp_register_user;
+DROP PROCEDURE IF EXISTS sp_get_user_full_name;
+DROP PROCEDURE IF EXISTS sp_add_to_favourites;
+DROP PROCEDURE IF EXISTS sp_remove_from_favourites;
+DROP PROCEDURE IF EXISTS sp_add_rating;
+DROP PROCEDURE IF EXISTS sp_get_categories; 
+DROP PROCEDURE IF EXISTS sp_get_recipes;
+DROP PROCEDURE IF EXISTS sp_get_recipe_details;
+DROP PROCEDURE IF EXISTS sp_get_recipe_categories;
+DROP PROCEDURE IF EXISTS sp_get_recipe_ingredients;
+DROP PROCEDURE IF EXISTS sp_get_recipe_steps;
+DROP PROCEDURE IF EXISTS sp_get_recipe_tips;
+DROP PROCEDURE IF EXISTS sp_search_recipes;
+DROP PROCEDURE IF EXISTS sp_get_user_favourite_recipes;
+DROP PROCEDURE IF EXISTS sp_get_user_favourite_recipe;
+DROP PROCEDURE IF EXISTS sp_get_average_rating;
+DROP PROCEDURE IF EXISTS sp_get_user_rating;
+
+
+-- Login
+DELIMITER //
+
+CREATE PROCEDURE sp_login(
+    IN p_email VARCHAR(100)
+)
+BEGIN
+    SELECT user_id, password FROM users 
+    WHERE email = p_email
+    LIMIT 1;
+END //
+
+DELIMITER ;
+
+
+-- User Registration and check if the user already registered
+DELIMITER //
+
+CREATE PROCEDURE sp_register_user(
+	IN p_full_name VARCHAR(50), 
+	IN p_password VARCHAR(100), 
+    IN p_email VARCHAR(100)
+)
+BEGIN
+    IF NOT EXISTS (SELECT email FROM users WHERE email = p_email) THEN
+        INSERT INTO users (full_name, password, email) 
+        VALUES (p_full_name, p_password, p_email);
+    ELSE
+        SELECT 'User already exists' AS ErrorMessage;
+    END IF;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_get_user_full_name(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT full_name FROM users 
+    WHERE user_id = p_user_id
+    LIMIT 1;
+END //
+
+DELIMITER ;
+
+
+-- Add recipe to user's favourites
+
+DELIMITER //
+
+CREATE PROCEDURE sp_add_to_favourites(
+	IN p_user_id INT, 
+    IN p_recipe_id INT
+)
+BEGIN
+    INSERT INTO favourites (user_id, recipe_id) 
+    VALUES (p_user_id, p_recipe_id);
+END //
+
+DELIMITER ;
+
+-- Remove recipe from user's favourties
+
+DELIMITER //
+
+CREATE PROCEDURE sp_remove_from_favourites(
+	IN p_user_id INT, 
+	IN p_recipe_id INT
+)
+BEGIN
+    DELETE FROM favourites 
+    WHERE user_id = p_user_id AND recipe_id = p_recipe_id;
+END //
+
+DELIMITER ;
+
+-- Add user rating or update existing rating
+DELIMITER //
+
+CREATE PROCEDURE sp_add_rating(
+	IN p_user_id INT, 
+    IN p_recipe_id INT, IN p_rating INT
+)
+BEGIN
+    IF EXISTS (SELECT * FROM user_rating WHERE user_id = p_user_id AND recipe_id = p_recipe_id) THEN
+        UPDATE user_rating 
+        SET rating = p_rating 
+        WHERE user_id = p_user_id AND recipe_id = p_recipe_id;
+    ELSE
+        INSERT INTO user_rating (user_id, recipe_id, rating) 
+        VALUES (p_user_id, p_recipe_id, p_rating);
+    END IF;
+END //
+
+DELIMITER ;
+
+-- Get user rating
+DELIMITER //
+
+CREATE PROCEDURE sp_get_user_rating(
+    IN p_user_id INT,
+    IN p_recipe_id INT
+)
+BEGIN
+    SELECT rating
+    FROM user_rating
+    WHERE user_id = p_user_id AND recipe_id = p_recipe_id;
+END //
+
+DELIMITER ;
+
+
+-- Get Categories for the front end drop down menus
+DELIMITER //
+
+CREATE PROCEDURE sp_get_categories()
+BEGIN
+    SELECT 
+        category_id, 
+        name 
+    FROM lkp_categories;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_get_recipes(
+    IN p_search_keyword VARCHAR(255),
+    IN p_category_id INT,
+    IN p_sort_by VARCHAR(255)
+)
+BEGIN
+    SET @sql = CONCAT('SELECT 
+                        r.recipe_id, 
+                        r.title, 
+                        r.description, 
+                        r.preparation_time, 
+                        r.cooking_time, 
+                        r.nr_served, 
+                        r.picture_url,
+                        COALESCE(AVG(ur.rating), 0) AS average_rating
+                      FROM recipes r
+                      LEFT JOIN user_rating ur ON r.recipe_id = ur.recipe_id ');
+
+    -- Search keyword filter
+    IF p_search_keyword IS NOT NULL AND TRIM(p_search_keyword) != '' THEN
+        SET @sql = CONCAT(@sql, ' WHERE r.title LIKE CONCAT("%", ? , "%") 
+                                  OR r.description LIKE CONCAT("%", ? , "%")');
+    END IF;
+
+    -- Group by before joining categories for accurate averaging
+    SET @sql = CONCAT(@sql, ' GROUP BY r.recipe_id ');
+
+    -- Category filter
+    IF p_category_id IS NOT NULL AND p_category_id != 0 THEN
+        SET @sql = CONCAT(@sql, ' HAVING r.recipe_id IN (
+                                  SELECT rc.recipe_id
+                                  FROM recipe_category rc
+                                  WHERE rc.category_id = ?) ');
+    END IF;
+
+    -- Sorting
+    SET @sql = CONCAT(@sql, ' ORDER BY ');
+    CASE p_sort_by
+        WHEN 'title_asc' THEN SET @sql = CONCAT(@sql, ' r.title ASC ');
+        WHEN 'title_desc' THEN SET @sql = CONCAT(@sql, ' r.title DESC ');
+        WHEN 'nr_served_asc' THEN SET @sql = CONCAT(@sql, ' r.nr_served ASC'); 
+        WHEN 'nr_served_desc' THEN SET @sql = CONCAT(@sql, ' r.nr_served DESC'); 
+        WHEN 'average_rating_asc' THEN SET @sql = CONCAT(@sql, ' average_rating ASC ');
+        WHEN 'average_rating_desc' THEN SET @sql = CONCAT(@sql, ' average_rating DESC ');
+        ELSE SET @sql = CONCAT(@sql, ' r.recipe_id ASC '); -- Default sorting
+    END CASE;
+
+    PREPARE stmt FROM @sql;
+    
+    IF p_search_keyword IS NOT NULL AND TRIM(p_search_keyword) != '' THEN
+        IF p_category_id IS NOT NULL AND p_category_id != 0 THEN
+            SET @search_keyword1 = p_search_keyword;
+            SET @search_keyword2 = p_search_keyword;
+            SET @category_id = p_category_id;
+            EXECUTE stmt USING @search_keyword1, @search_keyword2, @category_id;
+        ELSE
+            SET @search_keyword1 = p_search_keyword;
+            SET @search_keyword2 = p_search_keyword;
+            EXECUTE stmt USING @search_keyword1, @search_keyword2;
+        END IF;
+    ELSE
+        IF p_category_id IS NOT NULL AND p_category_id != 0 THEN
+            SET @category_id = p_category_id;
+            EXECUTE stmt USING @category_id;
+        ELSE
+            EXECUTE stmt;
+        END IF;
+    END IF;
+    
+    DEALLOCATE PREPARE stmt;
+END //
+
+DELIMITER ;
+
+
+
+-- Get Recipe Details for a specific recipe
+DELIMITER //
+
+CREATE PROCEDURE sp_get_recipe_details(
+	IN p_recipe_id INT
+)
+BEGIN
+    SELECT 
+        r.recipe_id, 
+        r.title, 
+        r.description, 
+        r.preparation_time, 
+        r.cooking_time, 
+        r.nr_served, 
+        r.picture_url
+    FROM recipes r
+    WHERE r.recipe_id = p_recipe_id;
+END //
+
+
+-- Get Recipe Categories
+DELIMITER //
+
+CREATE PROCEDURE sp_get_recipe_categories(
+	IN p_recipe_id INT
+)
+BEGIN
+    SELECT 
+        r.recipe_id, 
+        r.title, 
+        c.name AS category_name
+    FROM recipes r
+    LEFT JOIN recipe_category rc ON r.recipe_id = rc.recipe_id
+    LEFT JOIN lkp_categories c ON rc.category_id = c.category_id
+    WHERE r.recipe_id = p_recipe_id;
+END //
+
+DELIMITER ;
+
+-- Get Recipe Details - Ingredients
+
+DELIMITER //
+
+CREATE PROCEDURE sp_get_recipe_ingredients(
+    IN p_recipe_id INT
+)
+BEGIN
+    SELECT 
+        ri.section AS ingredient_section,
+        ri.quantity,
+        COALESCE(uom.name, '') AS unit_of_measure,
+        i.name AS ingredient_name,
+        COALESCE(m.description, ' ') AS preparation_method,
+		Replace(
+			Replace(
+				CONCAT_WS(' ',
+				ri.quantity,
+				CASE WHEN uom.name IS NOT NULL AND uom.name <> '' THEN CONCAT(uom.name, ' ') ELSE '' END,
+				i.name,
+				IF(m.description IS NOT NULL AND m.description <> '', CONCAT(', ', m.description), '')
+				), 
+		 '  ', ' '), 
+			' , ', ', ') AS full_sentence
+    FROM recipe_ingredient ri
+    LEFT JOIN lkp_ingredients i ON ri.ingredient_id = i.ingredient_id
+    LEFT JOIN lkp_unit_of_measure uom ON ri.uom_id = uom.uom_id
+    LEFT JOIN lkp_method m ON ri.method_id = m.method_id
+    WHERE ri.recipe_id = p_recipe_id;
+END //
+
+DELIMITER ;
+
+-- Get Recipe Details - Steps (method)
+DELIMITER //
+
+CREATE PROCEDURE sp_get_recipe_steps(
+    IN p_recipe_id INT
+)
+BEGIN
+    SELECT 
+        step_nr,
+        description AS step_description,
+        minutes_needed
+    FROM recipe_steps
+    WHERE recipe_id = p_recipe_id
+    ORDER BY step_nr;
+END //
+
+DELIMITER ;
+
+-- Get Recipe Details - Tips
+DELIMITER //
+
+CREATE PROCEDURE sp_get_recipe_tips(
+    IN p_recipe_id INT
+)
+BEGIN
+    SELECT 
+        tip_nr,
+        description AS tip_description
+    FROM recipe_tips
+    WHERE recipe_id = p_recipe_id
+    ORDER BY tip_nr;
+END //
+
+DELIMITER ;
+
+-- Search Recipe based on text in recipe discription, based on category or both of these
+DELIMITER //
+
+CREATE PROCEDURE sp_search_recipes(
+	IN p_description VARCHAR(100), 
+    IN p_category_id INT
+)
+BEGIN
+    SELECT 
+        r.recipe_id, 
+        r.title, 
+        r.description, 
+        c.name AS category_name
+    FROM recipes r
+    INNER JOIN recipe_category rc ON r.recipe_id = rc.recipe_id
+    INNER JOIN lkp_categories c ON rc.category_id = c.category_id
+    WHERE (r.description LIKE CONCAT('%', p_description, '%') OR p_description IS NULL)
+      AND (c.category_id = p_category_id OR p_category_id IS NULL);
+END //
+
+DELIMITER ;
+
+-- Get User Favourite Recipes
+DELIMITER //
+
+CREATE PROCEDURE sp_get_user_favourite_recipes(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT 
+        r.recipe_id, 
+        r.title, 
+        r.description, 
+        r.picture_url, 
+        COALESCE(AVG(ur.rating), 0) AS average_rating
+    FROM favourites f
+    INNER JOIN recipes r ON f.recipe_id = r.recipe_id
+    LEFT JOIN recipe_category rc ON r.recipe_id = rc.recipe_id
+    LEFT JOIN user_rating ur ON r.recipe_id = ur.recipe_id
+    WHERE f.user_id = p_user_id
+    GROUP BY r.recipe_id, r.title, r.description, r.picture_url;
+END //
+
+DELIMITER ;
+
+-- Get User Favourite Recipe if applicable
+DELIMITER //
+
+CREATE PROCEDURE sp_get_user_favourite_recipe(
+    IN p_user_id INT,
+    IN p_recipe_id INT
+)
+BEGIN
+    SELECT 
+        f.recipe_id
+    FROM favourites f
+    WHERE f.user_id = p_user_id AND f.recipe_id = p_recipe_id
+    LIMIT 1;
+END //
+
+DELIMITER ;
+
+
+-- Get Average rating for a recipe
+DELIMITER //
+
+CREATE PROCEDURE sp_get_average_rating(IN p_recipe_id INT)
+BEGIN
+    SELECT IFNULL(AVG(rating), 0) as average_rating
+    FROM user_rating
+    WHERE recipe_id = p_recipe_id;
+END //
+
+DELIMITER ;
