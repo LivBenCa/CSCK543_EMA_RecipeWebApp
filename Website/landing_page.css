@@ -1,0 +1,217 @@
+/* Includes logo, login and registration links */
+header {
+	margin-top: 0;  /* Set margin top */
+	padding: 3em 1 em 2 em 1 em;  /* Set padding */
+	border-bottom: 2px solid black; /* Set border bottom */
+  display: flex;  /* display items in a row */
+	align-items: center;  /* align items in the center */
+
+}
+
+/* Dropdown Button */
+.dropbtn {  /* style the dropdown button */
+  color: white; /* Set color */
+  padding: 16px;  /* Set padding */
+  font-size: 16px;  /* Set font size */
+  border: none; /* Set border */
+  cursor: pointer;  /* Set cursor */
+}
+
+.dropdown { /* style the dropdown */
+  position: relative; /* Set position */
+  display: inline-block;  /* Set display */
+}
+
+.dropdown-content { /* style the dropdown content */
+  display: none;  /* Set display */
+  position: absolute; /* Set position */
+  background-color: #f9f9f9;  /* Set background color */
+  min-width: 160px; /* Set min width */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Set box shadow */
+  z-index: 1; /* Set z index */
+  right: 0; /* Set right */
+}
+
+.dropdown-content a { /* style the dropdown content links */
+  color: black; /* Set color */
+  padding: 12px 16px; /* Set padding */
+  text-decoration: none;  /* Set text decoration */
+  display: block; /* Set display */
+}
+
+.dropdown-content a:hover { /* style the dropdown content links when hovered */
+  background-color: #f1f1f1;  /* Set background color */
+}
+
+.dropdown:hover .dropdown-content { /* style the dropdown content when hovered */
+  display: block; /* Set display */
+}
+
+
+html {  /* style the html */
+	box-sizing: border-box; /* Set box sizing */
+	height: 100%; /* Set height */
+}
+* {
+	box-sizing: inherit;
+}
+
+
+
+
+nav { /* style the navigation */
+	margin: 0;  /* Set margin */
+	padding: 0; /* Set padding */
+	font-size: 1.5em; /* Set font size */
+	font-family: 'Trebuchet MS', sans-serif;
+	list-style-type: none;  /* Remove bullt points*/
+	flex-grow: 1; /* Set flex grow */
+
+	ul {
+		margin: 0;  /* Set margin */
+		padding: 0; /* Set padding */
+		display: flex;    /* display items in a row */
+		justify-content: right; /* Set justify content to sit on the right sid eof the screen */
+	}
+}
+nav ul li a {
+    padding: 2px 3px; /* Set padding */
+    font-size: 15px;  /* Set font size */
+    text-decoration: none;  /* Remove underline */
+    font-weight: bold;  /* Set font weight to bold */
+    color: #444;  /* Set text color */
+}
+nav ul li a:hover { /* style the links when hovered */
+	background: #FFF; /* Set background color */
+	color: #2E7D32; /* Set text color */
+}
+nav ul li { /* style the list items */
+    display: inline-block;  /* display items in a row */
+    margin: 10px; /* Set margin */
+}
+nav ul {  /* style the list */
+    list-style: none; /* Remove bullet points */
+}
+
+
+
+.simpleSearch { /* style the search bar */
+	width: 250px; /* Set width */
+	height: 23px; /* Set height */
+	padding: 0 0 0 3px; /* Set padding */
+	overflow: hidden; /* Hide the overflow */
+	display: flex;  /* display items in a row */
+	vertical-align: middle; /* align items in the middle vertically */
+	align-items: center;  /* align items in the center */
+
+	input { /* style the input */
+		width: 195px; /* Set width */
+	}
+
+}
+
+
+main {  /* style the main */
+  display: flex;  /* display items in a row */
+  flex-direction: column; /* align items in a column */
+  /* justify-content: center; */
+  align-items: center;  /* align items in the center */
+  height: 100vh; /* Viewport height */
+  background: url('images/landing-images/landing-dishes-3.png') no-repeat center center; /* Background image path */
+  background-size: cover; /* Set background size to cover */
+}
+
+.landing-main-block { /* style the main block */
+  text-align: center; /* Align text in the center */
+  padding: 20px;  /* Set padding */
+  max-width: 600px; /* Set max width */
+  margin-top: 30px; /* Set margin top */
+}
+
+.landing-main-block h1 {  /* style the heading */
+  margin: 10 0 20px 0;  /* Set margin */
+  font-size: 3em; /* Set font size */
+  font-family: 'Trebuchet MS', sans-serif;  /* Set font family */
+  color: black; /* Set color */
+  text-shadow: 1px 1px 2px white; /* Set text shadow */
+  letter-spacing: .2rem;  /* Set letter spacing */
+  word-spacing: .2rem;  /* Set word spacing */
+}
+
+.landing-main-block p { /* style the paragraph */
+  font-size: 1em; /* Set font size */
+  margin: 0;  /* Set margin */
+  font-family: 'Trebuchet MS', sans-serif;  /* Set font family */
+  color: black; /* Set color */
+  text-shadow: 1px 1px 2px white; /* Set text shadow */
+  line-height: 2em; /* Set line height */
+}
+
+.landing-text { /* style the text */
+    color: #424242; /* Set color */
+}
+
+#logo { /* style the logo */
+    vertical-align: middle; /* Set vertical align */
+    font-size: 30px;  /* Set font size */
+    margin-right: 35px; /* Set margin right */
+    color: black; /* Set color */
+	display: flex;    /* display items in a row */
+	align-items: center;  /* align items in the center */
+}
+#logo img { /* style the logo image */
+    width: 50px;  /* Set width */
+    vertical-align: middle; /* Set vertical align */
+    margin-right: 10px;
+}
+
+body {  /* style the body */
+		font-size: 100%;  /* Set font size */
+		font-style: normal; /* Set font style */
+		background-color: white;  /* Set background color */
+		padding: 1em; /* Set padding */
+		font-family: Tahoma, Verdana, sans-serif; /* Set font family */
+		margin: 0;  /* Set margin */
+		height: 100%; /* Set height */
+}
+
+
+.footer {
+	position: fixed;  /* Set position to bottom of screen*/
+	left: 0;  /* Stick to left */
+	bottom: 0;    /* Stick to bottom */
+	width: 100%;  /* Set width 100% of screen*/
+	padding: 10px 0;  /* Set padding */
+	height: 50px; /* Set height */
+	background-color: #709a2e;    /* Set background color */
+	color: #ffffff; /* Set font color */
+	margin-top: auto; /* Set margin top to auto */
+	text-align: center; /* Set text align to center */
+  align-items: center;  /* align items in the center */
+}
+
+.footer p {
+  margin-left: 10px;  /* Set margin left of the text*/
+}
+.banner-image {
+  width: 100%;  /* Set width to 100% */
+  height: auto; /* Set height to auto (will remain  */
+}
+
+
+
+@media screen and (max-width: 600px) {  /* Set media queries for screens 6000 px and less */
+	.landing-main-block {
+		max-width: 90%; /* Ensure they don't overflow on smaller screens */
+	}
+
+  .landing-main-block h1 {  /* style the heading */
+    margin: 10 0 20px 0;  /* Set margin */
+    font-size: 2em; /* Set font size */
+    font-family: 'Trebuchet MS', sans-serif;  /* Set font family */
+    color: black; /* Set text color */
+    text-shadow: 1px 1px 2px white; /* Set text shadow */
+    letter-spacing: .2rem;  /* Set letter spacing */
+    word-spacing: .2rem;  /* Set word spacing */
+  }
+}
