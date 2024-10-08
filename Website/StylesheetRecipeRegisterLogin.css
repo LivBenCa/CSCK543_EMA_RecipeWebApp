@@ -1,0 +1,465 @@
+
+/* Background colour */
+body {
+  background-color: white;
+}
+/* header styles */
+header {
+	margin-top: 0; /* no margin at the top */
+	border-bottom: 2px solid black; /* border a the bottom of the navbar, 2 pixels thick and a solid black line */
+  display: flex; /* items will display next to eachother using flexbox */
+	align-items: center; /* items will be aligned in the center on the cross axis */
+}
+
+/* styles for the dropdown Button */
+  .dropbtn {
+  color: white; /* text colour of the button */
+  padding: 16px;  /* interior spce  around the button */
+  font-size: 16px;  /* font size of the button */
+  border: none; /* removes the border from the button */
+  cursor: pointer; /* the mouse changes to a pointing hand on hovering over the button */
+}
+
+/* dropdown on header */
+.dropdown {
+  position: relative; /* Establishes a positioning context for absolutely positioned children */
+  display: inline-block; /* Allows element to flow inline with text while setting dimensions */
+}
+
+.dropdown-content {
+  display: none; /* Hides the dropdown content from view by default*/
+  position: absolute; /* The dropdown content is positioned absolutely to the dropdown button */
+  background-color: #f9f9f9;  /* Background colour of the dropdown content */
+  min-width: 160px; /* Minimum width of the dropdown content */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Adds a shadow to the dropdown content */
+  z-index: 1; /* Sets the z-index of the dropdown content */
+  right: 0; /* Aligns the dropdown content to the right of the dropdown button */
+}
+
+.dropdown-content a {
+  color: black; /* Text colour of the dropdown content */
+  padding: 12px 16px; /* Interior space of the dropdown content */
+  text-decoration: none;  /* Removes the underline from the links */
+  display: block; /* Makes the links display as block elements */
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;  /* Background colour of the dropdown content on hover */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block; /* Displays the dropdown content when the dropdown button is hovered over */
+}
+
+
+#logo {
+  vertical-align: middle; /* Aligns the logo vertically in the header */
+  font-size: 30px;  /* Font size of the logo */
+  margin-right: 35px; /* Margin to the right of the logo */
+  color: black;
+display: flex;  /* items will display next to eachother using flexbox */
+align-items: center;  /* items will be aligned in the center on the cross axis */
+}
+#logo img {
+  width: 50px;  /* Width of the logo */
+  vertical-align: middle; /* Aligns the logo vertically in the header */
+  margin-right: 10px;/* Margin to the right of the image */
+}
+
+nav {
+	margin: 0;  /* no margin */
+	padding: 0; /* no padding */
+	font-size: 1.5em; /* font size of the text */
+	font-family: 'Trebuchet MS', sans-serif;  /* font family of the text */
+	list-style-type: none;  /* removes the bullet points from the list */
+	flex-grow: 1; /* the navbar will grow to fill the space */
+
+
+	ul {
+		margin: 0;  /* no margin */
+		padding: 0; /* no padding */
+		display: flex;  /* items will display next to eachother using flexbox */
+		justify-content: right; /* aligns the list items to the right */
+	}
+}
+nav ul li a {
+    padding: 2px 3px; /* padding around the text */
+    font-size: 15px;  /* font size of the text */
+    text-decoration: none;  /* removes the underline from the links */
+    font-weight: bold;  /* makes the text bold */
+    color: #444;  /* text colour */
+}
+nav ul li a:hover {
+	background: #FFF; /* background colour of the links on hover */
+	color: #2E7D32; /* text colour of the links on hover */
+}
+nav ul li {
+    display: inline-block;  /* makes the list items display inline */
+    margin: 10px; /* margin around the list items */
+}
+nav ul {
+    list-style: none; /* removes the bullet points from the list */
+}
+
+.landing-image {
+  margin: 5px;  /* margin around the image */
+  height:500px; /* height of the image */
+  width: 49%; /* width of the image relative to its parent*/
+  margin-top: 20px; /* margin at the top of the image */
+}
+
+.landing-image img {
+  width: 100%;  /* Ensure the image itself also takes full width */
+  height: 500px;  /* Adjust height to maintain aspect ratio */
+  object-fit: cover;  /* Ensures the image covers the entire space */
+}
+
+input,
+select {
+    background-color: #f6f6f6;  /* background colour of the input and select elements */
+    border: none; /* removes the border from the input and select elements */
+    padding: 8px 12px;  /* padding around the input and select elements */
+    border-radius: 8px; /* border radius (rounding of corners) of the input and select elements */
+    font-size: 16px;  /* font size of the input and select elements */
+    line-height: 100%;  /* line height of the input and select elements */
+}
+
+input::placeholder,
+select {
+    font-style: italic; /* italic font style of the placeholder text */
+}
+
+#search-form {
+  display:flex; /* items will display next to eachother using flexbox */
+}
+
+#search-bar {
+  width: 500px; /* width of the search bar */
+}
+
+#search-bar-mobile {
+  display:none; /* hides the search bar on mobile */
+}
+
+
+select {
+    position: relative; /* Establishes a positioning context for absolutely positioned children */
+    max-width: 200px; /* Maximum width of the select element */
+    width: 100%;  /* width of the select element */
+    appearance: none; /* removes the default appearance of the select element */
+    background-image: url('images/user-page/triangle-icon.svg');  /* adds a triangle icon to the select element */
+    background-size: 15px;  /* size of the background image */
+    background-repeat: no-repeat; /* prevents the background image from repeating */
+    background-position-x: calc(100% - 12px); /* positions the background image to the right of the select element */
+    background-position-y: center;  /* positions the background image in the center of the select element */
+}
+
+
+
+h2 {
+  font-family: 'Trebuchet MS', sans-serif;  /* font family of the h2 */
+  font-size: 2em
+
+}
+
+h3 {
+  font-family: 'Trebuchet MS', sans-serif;  /* font family of the h3 */
+}
+
+h5 {
+  font-family: 'Trebuchet MS', sans-serif;  /* font family of the h5 */
+  font-size: 1em;
+
+}
+
+
+p, ul, ol, li{
+  font-family: 'Trebuchet MS', sans-serif;  /* font family of the p, ul, ol, li */
+  font-size: 1em;
+}
+
+.login-register-form, .input, .button {
+  font-family: 'Trebuchet MS', sans-serif;  /* font family of the login-register-form, input and button */
+  font-size: 1em;
+}
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* The box model is used to calculate the width and height of the elements */
+}
+
+
+
+.main { /* main class */
+  flex-grow: 1; /* the main element will grow to fill the space */
+  display: flex;  /* items will display next to eachother using flexbox */
+  flex-wrap: wrap;  /* items will wrap to the next line if there is not enough space */
+  justify-content: center;  /* aligns the items to the center */
+}
+
+.container {  /* container class */
+  flex-grow: 1;     /* the container element will grow to fill the space */
+  display: flex;    /* items will display next to eachother using flexbox */
+  flex-wrap: wrap;  /* items will wrap to the next line if there is not enough space */
+  justify-content: center;  /* aligns the items to the center */
+  width: 90%; /* width of the container */
+  margin-right: auto; /* margin to the right of the container */
+  margin-left: auto;  /* margin to the left of the container */
+}
+
+
+.recipe-image {
+  margin: 5px;    /* margin around the recipe image */
+  height:500px;  /* height of the recipe image */
+  width: 49%;   /* width of the recipe image relative to its parent */
+
+}
+
+.recipe-image img {
+  width: 100%;  /* Ensure the image itself also takes full width */
+  height: 500px;  /* Adjust height to maintain aspect ratio */
+  object-fit: cover;  /* Ensures the image covers the entire space */
+}
+
+.recipe-info {
+  min-height:500px;   /* minimum height of the recipe info */
+  margin: 5px;      /* margin around the recipe info */
+  padding: 25px;  /* padding around the recipe info */
+  padding-left: 50px; /* padding to the left of the recipe info */
+  width: 49%; /* width of the recipe info relative to its parent */
+}
+.favourites {
+  display:flex; /* items will display next to eachother using flexbox */
+
+  align-items: center;  /* items will be aligned in the center on the cross axis */
+  margin-left: 20px;  /* margin to the left of the favourites */
+}
+
+.favourites img {
+  width: 20px;  /* width of the favourites icon */
+  height: 20px; /* height of the favourites icon */
+  margin-right: 20px; /* margin to the right of the favourites icon */
+}
+
+.time {
+  text-align: center; /* aligns the text to the center */
+}
+
+.time img {
+  width: 20px;  /* width of the time icon */
+  height: 20px; /* height of the time icon */
+
+}
+
+.people img {
+  width: 20px;  /* width of the people icon */
+  height: 20px; /* height of the people icon */
+
+
+}
+
+.time-people {
+  display:flex; /* items will display next to eachother using flexbox */
+
+  align-items:center; /* items will be aligned in the center on the cross axis */
+}
+
+.people {
+  margin-left: 15px;  /* margin to the left of the people */
+
+  text-align: center; /* aligns the text to the center */
+}
+
+
+.ingredients {
+  background-color: #FED5B2;  /* background colour of the ingredients block*/
+  margin: 5px;  /* margin around the ingredients */
+  padding: 50px;  /* padding around the ingredients */
+  min-height:500px; /* minimum height of the ingredients */
+  width: 49%; /* width of the ingredients relative to its parent */
+}
+
+
+.method {
+
+  margin: 5px;  /* margin around the method box*/
+  padding: 50px;    /* padding around the method box*/
+  min-height:500px; /* minimum height of the method box */
+  width: 49%; /* width of the method box relative to its parent */
+}
+
+.rating-box {
+
+  margin: 5px;  /* margin around the rating box */
+  padding: 50px;  /* padding around the rating box */
+  min-height:500px; /* minimum height of the rating box */
+  width: 49%; /* width of the rating box relative to its parent */
+}
+
+.rating {
+  margin: 20px; /* margin around the rating */
+}
+
+.star-rating{
+  color: #bebebe;
+  font-size:2em;
+}
+/*create the star*/
+.my-star::before{
+  content:"\002605";
+}
+/*remove the default style (italic) of the star*/
+.my-star{
+  font-style: unset !important;
+}
+/*set active star color*/
+.is-active{
+  color:#fb8900;
+}
+/*set color on hover*/
+.my-star:not(.is-active):hover{
+  color: #fb8900;
+}
+
+.my-star-2::before{
+  content:"\002605";
+}
+/*remove the default style (italic) of the star*/
+.my-star-2{
+  font-style: unset !important;
+}
+/*set active star color*/
+.is-active{
+  color:#fb8900;
+}
+
+.star-rating img.star {
+	width: 25px;  /* width of the star */
+	height: auto; /* height of the star */
+	display: inline-block;  /* makes the stars display inline */
+}
+
+
+
+.tips{
+  background-color: #FED5B2;  /* background colour of the tips box */
+  margin: 5px;  /* margin around the tips box */
+  padding: 50px;  /* padding around the tips box */
+  min-height:500px;   /* minimum height of the tips box */
+  width: 49%; /* width of the tips box relative to its parent */
+}
+
+
+@media (max-width: 1142px) {  /* media query for a maximum width of 1142px */
+  .main, .recipe-image, .recipe-info, .ingredients, .method, .rating-box, .tips, .landing-image, .login-block {
+    width: 100%;
+    margin: 0;
+    padding-top: 10px;
+    min-height: 50px;
+  }
+
+  .landing-image img {
+    width: 100%;  /* Ensure the image itself also takes full width */
+    height: auto; /* Adjust height to maintain aspect ratio */
+  }
+
+  #search-bar {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) { /* media query for a maximum width of 768px */
+  .main, .recipe-image, .recipe-info, .ingredients, .method, .rating-box, .tips, .landing-image, .login-block  {
+    width: 100%;
+    margin: 0;
+    padding-top: 10px;
+    min-height: 50px;
+
+
+  }
+
+    #search-bar {
+        margin-left: -40px;
+        width: 85px;
+    }
+
+    #search-bar-mobile {
+        display: inline-block;
+        width: 90px;
+    }
+
+
+
+  .landing-image img {
+    width: 100%;  /* Ensure the image itself also takes full width */
+    height: auto; /* Adjust height to maintain aspect ratio */
+  }
+
+  .login-register-form {
+    display: flex;
+    flex-direction: column;
+    margin-left: -30px;
+  }
+}
+
+
+
+
+.login-block {  /* login-block class */
+  width: 49%; /* width of the login block relative to its parent */
+
+}
+
+.login-register-form {  /* login-register-form class */
+  display: flex;  /* items will display next to eachother using flexbox */
+  flex-direction: column; /* items will display in a column */
+}
+
+
+.main-image {
+  width: 49%; /* width of the main image relative to its parent */
+  height: 500px;  /* height of the main image */
+  object-fit: cover;  /* Ensures the image covers the entire space */
+}
+
+
+.login-register-form input {  /* login-register-form input class */
+  margin: 10px; /* margin around the input */
+  padding: 10px;  /* padding around the input */
+  border-radius: 5px; /* border radius (rounding of corners) of the input */
+  border: 1px solid #ccc; /* border of the input */
+  width: 15em;  /* width of the input */
+}
+
+.login-register-form button { /* login-register-form button class */
+  margin: 10px;     /* margin around the button */
+  padding: 10px;  /* padding around the button */
+  border-radius: 5px; /* border radius (rounding of corners) of the button */
+  border: 1px solid #ccc; /* border of the button */
+  width: 10em;  /* width of the button */
+  background-color: #FED5B2;  /* background colour of the button */
+  font-weight: bold;  /* makes the text bold */
+  cursor: pointer;  /* the mouse changes to a pointing hand on hovering over the button */
+}
+
+.footer { /* footer class */
+	position:  fixed; /* The footer is fixed to the bottom of the page */
+	left: 0;  /* The footer is aligned to the left of the page */
+	bottom: 0;  /* The footer is aligned to the bottom of the page */
+	width: 100%;  /* The width of the footer is 100% of the page */
+	padding: 10px 0;  /* padding around the footer */
+	height: 50px; /* height of the footer */
+	background-color: #709a2e;  /* background colour of the footer */
+	color: #ffffff; /* text colour of the footer */
+	margin-top: auto; /* The footer is aligned to the bottom of the page */
+	text-align: center; /* aligns the text to the center */
+  align-items: center;  /* items will be aligned in the center on the cross axis */
+  /* margin-bottom: -50px; */
+}
+
+.footer p {
+  margin-left: 10px;  /* margin to the left of the text */
+}
