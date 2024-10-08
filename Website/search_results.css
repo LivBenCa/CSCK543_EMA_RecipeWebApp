@@ -1,0 +1,345 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* The width and height properties includes content, padding and border */
+}
+
+body {
+  font-family: 'Trebuchet MS';
+  background-color: white;
+}
+
+header {
+  margin-top: 10px; /* reset margin */
+  margin-bottom: 20px; /* add border to the bottom of the header */
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 2px solid black; /* a black line at the bottom of the header */
+  display: flex; /* items will display next to each other using flexbox */
+  align-items: center; /* items will be aligned in the center on the cross axis */
+  height:55px;
+}
+
+/* Dropdown Button */
+  .dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer; /* the cursor looks a pointer that indicates a link with an image of a pointing hand */
+}
+
+/* dropdown on header */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute; /* the .dropdown-content is positioned relative to its first positioned (not static) ancestor element - .dropdown */
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1; /* the dropdown menu is placed above the auth icon */
+  right: 0;
+  top: 75%; /* sets the top edge of .dropdown-content to a unit above the top edge of .dropdown */
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none; /* removes any bullets */
+  display: block; /* stacks the dropdown menu items above one another */
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1; /* the dropdown menu items will change its color upon hovering */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+#logo {
+  vertical-align: middle; /* the logo is placed in the middle of the middle of the header (vertically) */
+  font-size: 30px;
+  margin-right: 35px; /* is sticked closer to the left part of the header */
+  color: black;
+  display: flex;
+  align-items: center; /* positioned at the center of the container */
+}
+#logo img {
+  width: 50px;
+  vertical-align: middle; /* the logo is placed in the middle of the middle of the header (vertically) */
+  margin-right: 10px; /* has a margin from the right of the logo container */
+}
+
+nav {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  font-family: 'Trebuchet MS', sans-serif;
+  list-style-type: none; /* no markers are shown */
+  flex-grow: 1; /* the nav will occupy the same container's size as the logo and search bar */
+  align-items: center;
+
+
+	ul {
+		margin: 0;
+		padding: 0;
+		display: flex; /* to stretch the list inside the nav */
+		justify-content: right; /* the nav list is aligned at the right part */
+    align-items: center;
+	}
+}
+nav ul li a {
+    padding: 2px 3px;
+    font-size: 15px;
+    text-decoration: none; /* removes the bullets */
+    font-weight: bold;
+    color: #444;
+}
+nav ul li a:hover {
+	background: #FFF; /* background color is changed upon hovering */
+	color: #2E7D32; /* font color is changed upon hovering */
+}
+nav ul li {
+    display: inline-block; /* to display list items horizontally instead of vertically */
+    margin: 10px;
+    align-items: center; /* makes the nav links stick to the center of container */
+}
+nav ul {
+    list-style: none;
+}
+
+img {
+  display: block; /* displays pictures on a new line */
+}
+
+.container,
+.container-fluid {
+  width: 100%; /* stretches the .container through the whole page width */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  height: 100vh; /* Viewport height */
+}
+
+input,
+select {
+  background-color: #f6f6f6;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px; /* defines the round corners at the borders */
+  font-size: 16px;
+  line-height: 100%;
+  margin-bottom: 15px;
+}
+
+input::placeholder,
+select {
+  font-style: italic; /* the text inside the search by is written in italic */
+}
+
+input {
+  width: 100%;
+}
+
+select {
+  position: relative;
+  max-width: 200px;
+  width: 100%;
+  appearance: none; /* removes the browser’s default button styling */
+  background-image: url('images/user-page/triangle-icon.svg');
+  background-size: 15px;
+  background-repeat: no-repeat; /* prevents the background being cycled */
+  background-position-x: calc(100% - 12px);
+  background-position-y: center;
+}
+
+.search-filter {
+  display: flex; /* stretches all the filter elements inside it */
+  justify-content: space-between; /* adds space between 'All categories' filter, 'Search' btn and 'Sort by' filter */
+}
+
+.search-submit {
+  display: flex;
+  justify-content: space-between; /* adds space between 'All categories' filter and 'Search' btn */
+}
+
+#search-button {
+  width: 100px;
+  height: 32px;
+  margin-left: 5px;
+  font-style: italic;
+  font-size: 16px;
+}
+
+.catalog-header {
+  display: flex;
+  flex-wrap: wrap; /* distinguishes lines for user's name and the header of the body */
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.catalog-filter {
+  flex: 0 0 200px;
+}
+
+.catalog-result-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.catalog-title h1,
+.catalog-title h2 {
+  text-transform: uppercase;
+}
+
+.catalog-title h1 {
+  font-size: 54px;
+}
+
+.catalog-title h2 {
+  font-size: 32px;
+}
+
+.goods-list {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: 20px; /* adds space between recipes' cards */
+    list-style: none;
+}
+
+.goods-item {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    box-sizing: border-box; /* defines the square border for the item card */
+}
+
+.product {
+  width: 100%;
+  border-radius: 12px; /* customized the border of a recipe's card to make it round */
+  border: 1px solid #709a2e;
+  overflow: hidden;
+}
+
+.product-header {
+  height: 180px;
+  border-radius: 12px; /* makes corners of the product header card round */
+  overflow: hidden; /* confines the product image in the border */
+}
+
+.product-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* image keeps its aspect ratio and fills the given dimension */
+}
+
+.product-content {
+  padding: 12px;
+}
+
+.product-title {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #000000;
+  margin-bottom: 18px;
+}
+
+.product-btns {
+  display: flex;
+  justify-content: space-between; /* introduces space between the buttons */
+}
+
+.product-btns img {
+  width: 100%;
+}
+
+.product-trash,
+.product-rating img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center; /* aligns the line with the rating at the center of the card */
+  gap: 4px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.footer {
+	position: fixed; /* fixates the footer at the bottom of the page */
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 10px 0;
+	height: 50px;
+	background-color: #709a2e;
+	color: #ffffff;
+	margin-top: auto;
+	text-align: center;
+  align-items: center;
+}
+
+.footer p {
+  margin-left: 10px;
+}
+
+@media (max-width: 925px) {
+    .goods-item {
+        flex: 0 0 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+
+  .header-nav-item a {
+      font-size: 14px;
+  }
+
+  .header-form {
+      flex-direction: column; /* the items in the header are displayed vertically, as a column */
+  }
+
+  .catalog-title h1 {
+      font-size: 24px;
+  }
+
+  .catalog-title h2 {
+      font-size: 18px;
+  }
+
+  input::placeholder,
+select {
+  font-style: italic;
+  font-size: 10px;
+}
+}
