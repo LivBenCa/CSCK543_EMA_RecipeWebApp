@@ -1,0 +1,398 @@
+
+
+* { /* reset all padding and margin */
+  margin: 0;  /* reset margin */
+  padding: 0; /* reset padding */
+  box-sizing: border-box; /* The width and height properties includes content, padding and border */
+}
+
+header {
+	margin-top: 0;  /* reset margin */
+	border-bottom: 2px solid black; /* add border to the bottom of the header */
+    display: flex; /* items will display next to eachother using flexbox */
+	align-items: center; /* items will be aligned in the center on the cross axis */
+    height: 55px; /* set height of header */
+}
+nav { /* style the navigation bar */
+	margin: 0;
+	padding: 0;
+	font-size: 1.5em; /* set font size */
+	font-family: 'Trebuchet MS', sans-serif;  /* set font family */
+	list-style-type: none;  /* remove bullet points from list */
+	flex-grow: 1; /* set flex-grow to 1 */
+  align-items: center;  /* align items in the center */
+
+	ul {
+		margin: 0;  /* reset margin */
+		padding: 0; /* reset padding */
+		display: flex;  /* display items in a row */
+		justify-content: right; /* align items to the right */
+		align-items: center;  /* align items in the center */
+	}
+}
+nav ul li a { /* style the links */
+    padding: 2px 3px; /* set padding */
+    font-size: 15px;  /* set font size */
+    text-decoration: none;  /* remove underline */
+    font-weight: bold;  /* set font weight to bold */
+    color: #444;  /* set color */
+}
+nav ul li a:hover { /* style the links when hovered */
+	background: #FFF;
+	color: #2E7D32;
+}
+nav ul li { /* style the list items */
+    display: inline-block;  /* display items in a row */
+    margin: 10px; /* set margin */
+}
+nav ul {  /* style the list */
+    list-style: none; /* remove bullet points */
+}
+
+
+.simpleSearch {  /* style the search bar */
+	display: flex;  /* display items in a row */
+	gap: 8px; /* set gap between items */
+	flex: 1 1 600px;  /* set flex properties */
+	width: 40%; /* set width */
+	height: 23px; /* set height */
+	padding: 0 0 0 3px; /* set padding */
+	/* overflow: hidden; */
+	vertical-align: middle; /* align items in the middle vertically */
+	align-items: center;    /* align items in the center on the cross axis */
+
+	input { /* style the input */
+		width: 300px; /* set width */
+	}
+
+}
+
+  #search-bar { /* style the search bar */
+    width: 500px; /* set width */
+  }
+
+#search-button {  /* style the search button */
+width: 70px;  /* set width */
+height: 35px; /* set height */
+}
+
+
+body {  /* style the body */
+	font-family: 'Trebuchet MS';
+	background-color: white;
+	padding: 1em;
+	margin: 0;
+	height: 100%;
+	font-size: 100%;
+	font-style: normal;
+}
+/* Dropdown Button */
+.dropbtn {  /* style the dropdown button */
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown { /* style the dropdown */
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content { /* style the dropdown content */
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+  top: 75%;
+}
+
+.dropdown-content a { /* style the dropdown content links */
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover { /* style the dropdown content links when hovered */
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content { /* style the dropdown content when hovered */
+  display: block;
+}
+
+img { /* style the image */
+  display: block;
+}
+
+.container,
+.container-fluid {  /* style the container */
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+.container {  /* style the container */
+  max-width: 1200px;
+}
+
+.container-fluid {  /* style the container fluid */
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+#logo { /* style the logo */
+    vertical-align: middle;
+    font-size: 30px;
+    margin-right: 35px;
+    color: black;
+	display: flex;
+	align-items: center;
+}
+#logo img { /* style the logo image */
+    width: 50px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+main {  /* style the main */
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1em;
+}
+
+input,
+select {  /* style the input and select */
+  background-color: #f6f6f6;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 100%;
+}
+
+input::placeholder,
+select {  /* style the input placeholder and select */
+  font-style: italic;
+}
+
+input { /* style the input */
+  width: 100%;
+}
+
+select {  /* style the select */
+  position: relative;
+  max-width: 200px;
+  width: 100%;
+  appearance: none;
+  background-image: url('images/user-page/triangle-icon.svg');
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 12px);
+  background-position-y: center;
+}
+
+.catalog-header { /* style the catalog header */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 20px;
+  border: none;
+}
+
+.catalog-filter { /* style the catalog filter */
+  flex: 0 0 200px;
+}
+
+.catalog-result-filter {  /* style the catalog result filter */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.catalog-title h1,
+.catalog-title h2 { /* style the catalog title */
+  text-transform: uppercase;
+}
+
+.catalog-title h1 { /* style the catalog title h1 */
+  font-size: 54px;
+}
+
+.catalog-title h2 { /* style the catalog title h2 */
+  font-size: 32px;
+
+}
+
+.goods-list {     /* style the goods list */
+
+	display: flex;
+	justify-content: left;
+	flex-wrap: wrap;
+	gap: 20px;
+	list-style: none;
+    margin-top:200px;
+}
+
+.goods-item { /* style the goods item */
+	flex: 0 0 calc(25% - 20px); /* set flex properties */
+	max-width: calc(25% - 20px);  /* set max width */
+	box-sizing: border-box;
+}
+
+.product {  /* style the product */
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #709a2e;
+  overflow: hidden;
+}
+
+.product-header { /* style the product header */
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-header img { /* style the product header image */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-content {  /* style the product content */
+  padding: 12px;
+}
+
+.product-title {  /* style the product title */
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #000000;
+  margin-bottom: 18px;
+}
+
+.product-btns { /* style the product buttons */
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-btns img { /* style the product buttons image */
+  width: 100%;
+}
+
+.product-trash,
+.product-rating img { /* style the product trash and product rating image */
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.product-rating { /* style the product rating */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.footer {     /* style the footer*/
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 10px 0;
+	height: 40px;
+	background-color: #709a2e;
+	color: #ffffff;
+	margin-top: auto;
+	text-align: center;
+  align-items: center;
+}
+
+.footer p {
+  margin-left: 10px;
+}
+
+@media (max-width: 1142px) {  /* media query for max width 1142px */
+
+  #search-bar {
+    width: 300px;
+  }
+
+  .goods-list {
+    margin-top: 200px;;
+  }
+}
+
+
+
+@media (max-width: 925px) { /* media query for max width 925px */
+	.goods-item {
+		flex: 0 0 calc(50% - 20px);
+		max-width: calc(50% - 20px);
+	}
+
+  .header-nav-item a {
+      font-size: 14px;
+  }
+
+  .goods-list {
+    margin-top: 100px;
+  }
+
+  .catalog-title h1 {
+      font-size: 24px;
+  }
+
+  .catalog-title h2 {
+      font-size: 18px;
+  }
+
+	#search-bar {
+		margin-left: -45px;
+		width: 70px;
+	}
+
+  #search-bar-mobile {
+    display: inline-block;
+    margin-left: -40px;
+  }
+}
+
+@media (max-width: 410px) { /* media query for max width 410px */
+	input {
+		width: 150px;
+	}
+
+  #search-bar-mobile {
+    width: 70px;
+    margin-left: -40px;
+  }
+}
+
+
+@media (max-width: 390px) { /* media query for max width 410px */
+	input {
+		width: 150px;
+	}
+
+  #search-bar-mobile {
+    width: 70px;
+    margin-left: -60px;
+  }
+}
